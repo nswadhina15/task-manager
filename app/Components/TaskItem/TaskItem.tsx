@@ -39,6 +39,14 @@ function TaskItem({ title, description, date, isCompleted, id }: Props) {
         ) : (
           <button
             className="incomplete"
+            onClick={() => {
+              const task = {
+                id,
+                isCompleted: !isCompleted,
+              };
+
+              updateTask(task);
+            }}
           >
             Incomplete
           </button>
