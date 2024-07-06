@@ -1,12 +1,15 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Nunito } from 'next/font/google';
 import './globals.css';
 import Sidebar from './Components/Sidebar/Sidebar';
 import GlobalStyleProvider from './providers/GlobalStylesProvider';
 import ContextProvider from './providers/ContextProvider';
-import { ClerkProvider, auth } from '@clerk/nextjs'
+import { ClerkProvider, auth } from '@clerk/nextjs';
 
-const inter = Inter({ subsets: ['latin'] });
+const nunito = Nunito({
+  weight: ['400', '500', '600', '700', '800'],
+  subsets: ['latin'],
+});
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -18,13 +21,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-  const userId = auth();
+  const { userId } = auth();
 
   return (
     <ClerkProvider>
-    <html lang='en'>
-      <head>
+      <html lang="en">
+        <head>
           <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
@@ -33,15 +35,15 @@ export default function RootLayout({
             referrerPolicy="no-referrer"
           />
         </head>
-      <body className={inter.className}>
-        <ContextProvider>
-          <GlobalStyleProvider>
-            {userId && <Sidebar />}
-            <div className="w-full">{children}</div>
-          </GlobalStyleProvider>
-        </ContextProvider>
-      </body>
-    </html>
+        <body className={nunito.className}>
+          <ContextProvider>
+            <GlobalStyleProvider>
+              {userId ? <Sidebar /> : null}
+              <div className="w-full">{children}</div>
+            </GlobalStyleProvider>
+          </ContextProvider>
+        </body>
+      </html>
     </ClerkProvider>
   );
 }

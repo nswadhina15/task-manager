@@ -56,6 +56,8 @@ export async function GET(req: Request) {
           userId,
         },
       });
+
+      return NextResponse.json(tasks);
   } catch (error) {
     console.log("ERROR GETTING TASK: ", error);
     return NextResponse.json({ error: "Error updating task", status: 500 });
